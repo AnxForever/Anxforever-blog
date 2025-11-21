@@ -46,14 +46,16 @@ export default function ContactPage() {
             </motion.p>
 
             <div className="flex flex-col gap-4 font-mono text-lg">
-              <a href="mailto:hello@example.com" className="hover:text-accent-pink transition-colors">
-                hello@example.com
+              <a href="mailto:anxforever@qq.com" className="hover:text-accent-pink transition-colors">
+                anxforever@qq.com
               </a>
-              <a href="#" className="hover:text-accent-blue transition-colors">
-                @twitter_handle
-              </a>
-              <a href="#" className="hover:text-accent-green transition-colors">
-                github.com/username
+              <a
+                href="https://github.com/AnxForever"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent-green transition-colors"
+              >
+                github.com/AnxForever
               </a>
             </div>
           </div>

@@ -21,21 +21,26 @@ export function Footer() {
 
         <div className="flex flex-col gap-6 text-right items-end">
           <a
-            href="#"
+            href="mailto:anxforever@qq.com"
             className="text-3xl md:text-5xl font-black hover:text-accent-pink transition-colors bg-accent-yellow border-4 border-black px-6 py-2 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px]"
           >
-            hello@avantgarde.dev
+            anxforever@qq.com
           </a>
           <div className="flex gap-4 justify-end mt-4 flex-wrap">
-            {["TWITTER", "GITHUB", "LINKEDIN"].map((social, i) => (
-              <a
-                key={social}
-                href="#"
-                className={`font-black text-sm border-2 border-black px-6 py-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all bg-white hover:bg-${i === 0 ? "accent-blue" : i === 1 ? "accent-green" : "accent-pink"}`}
-              >
-                {social}
-              </a>
-            ))}
+            <a
+              href="https://github.com/AnxForever"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-black text-sm border-2 border-black px-6 py-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all bg-white hover:bg-accent-green"
+            >
+              GITHUB
+            </a>
+            <a
+              href="mailto:anxforever@qq.com"
+              className="font-black text-sm border-2 border-black px-6 py-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all bg-white hover:bg-accent-blue"
+            >
+              QQ邮箱
+            </a>
           </div>
           <p className="font-mono text-sm font-bold bg-black text-white px-2 py-1 mt-8">DESIGNED & BUILT BY V0</p>
         </div>
