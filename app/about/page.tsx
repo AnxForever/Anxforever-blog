@@ -117,10 +117,10 @@ export default function AboutPage() {
               <br />
               <br />
               我在数据的海洋中寻找模式，在 AI
-              的黑盒中探索可能，在音乐和动漫中汲取灵感。我相信最好的代码不是写出来的，而是'感觉'出来的。
+              的黑盒中探索可能，在音乐和动漫中汲取灵感。我相信最好的代码不是写出来的，而是&apos;感觉&apos;出来的。
             </motion.p>
             <div className="flex flex-wrap gap-4">
-              {["Python", "TensorFlow", "Next.js", "数据可视化", "音乐", "动漫"].map((tag, i) => (
+              {["Python", "TensorFlow", "Next.js", "数据可视化", "音乐", "动漫"].map((tag) => (
                 <span
                   key={tag}
                   className="px-4 py-2 border-2 border-black font-bold hover:bg-black hover:text-white transition-colors cursor-crosshair"

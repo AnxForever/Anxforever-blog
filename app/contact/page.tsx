@@ -31,7 +31,7 @@ export default function ContactPage() {
               animate={{ y: 0, opacity: 1 }}
               className="text-[10vw] leading-[0.8] font-black tracking-tighter mb-12 text-black"
             >
-              LET'S <br />
+              LET&apos;S <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-blue to-accent-pink">
                 COLLIDE
               </span>

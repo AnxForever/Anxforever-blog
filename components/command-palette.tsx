@@ -3,7 +3,16 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { Search, ArrowRight, Monitor, FileText, FlaskConical, User, Mail, Zap } from "lucide-react"
+import { Search, ArrowRight, Monitor, FileText, FlaskConical, User, Mail, Zap, type LucideIcon } from "lucide-react"
+
+type CommandItem = {
+  icon: LucideIcon
+  label: string
+  color: string
+} & (
+  | { href: string; action?: never }
+  | { action: () => void; href?: never }
+)
 
 export function CommandPalette() {
   const [open, setOpen] = React.useState(false)
@@ -59,7 +68,7 @@ export function CommandPalette() {
     }))
     .filter((group) => group.items.length > 0)
 
-  const handleSelect = (item: any) => {
+  const handleSelect = (item: CommandItem) => {
     setOpen(false)
     if (item.href) {
       router.push(item.href)

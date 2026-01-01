@@ -2,55 +2,31 @@
 
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { useState } from "react"
 import Link from "next/link"
 import { experiments } from "@/lib/data"
+import dynamic from "next/dynamic"
 
-const colors = ["#FF00FF", "#00FF00", "#00FFFF", "#FFFF00", "#FF0000"]
+const INITIAL_DISPLAY_COUNT = 6
+
+// 动态导入背景组件，禁用 SSR 以避免 hydration 不匹配
+const LabBackground = dynamic(() => import("@/components/lab-background").then((mod) => mod.LabBackground), {
+  ssr: false,
+})
 
 export default function LabPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const displayedExperiments = isExpanded ? experiments : experiments.slice(0, INITIAL_DISPLAY_COUNT)
+  const hasMoreExperiments = experiments.length > INITIAL_DISPLAY_COUNT
 
   return (
     <main className="min-h-screen bg-black text-white selection:bg-accent-green selection:text-black overflow-hidden relative">
       <Nav />
 
       {/* Background Animation */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(20,20,20,1),_black_90%)]" />
-        <div className="absolute top-0 left-0 w-full h-full opacity-30 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150 mix-blend-overlay" />
-
-        {Array.from({ length: 30 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full mix-blend-screen blur-xl"
-            initial={{
-              x: Math.random() * 1000,
-              y: Math.random() * 1000,
-              scale: Math.random() * 0.5 + 0.5,
-              opacity: Math.random() * 0.5,
-            }}
-            animate={{
-              x: Math.random() * 1000,
-              y: Math.random() * 1000,
-              scale: Math.random() * 1 + 0.5,
-              opacity: [0.2, 0.5, 0.2],
-            }}
-            transition={{
-              duration: Math.random() * 20 + 10,
-              repeat: Number.POSITIVE_INFINITY,
-              repeatType: "reverse",
-              ease: "linear",
-            }}
-            style={{
-              width: Math.random() * 400 + 100,
-              height: Math.random() * 400 + 100,
-              backgroundColor: colors[i % colors.length],
-            }}
-          />
-        ))}
-      </div>
+      <LabBackground />
 
       <div className="relative z-10 pt-32 pb-20 px-4 md:px-12 max-w-7xl mx-auto">
         <div className="flex justify-between items-end mb-20 border-b border-white/20 pb-8">
@@ -63,7 +39,8 @@ export default function LabPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {experiments.map((exp, index) => (
+          <AnimatePresence>
+          {displayedExperiments.map((exp, index) => (
             <Link href={`/lab/${exp.slug}`} key={exp.id}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -96,12 +73,37 @@ export default function LabPage() {
                 <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-20 pointer-events-none" />
 
                 <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-mono text-xs font-bold text-black z-20">
-                  LAUNCH_EXP -&gt;
+                  LAUNCH_EXP →
                 </div>
               </motion.div>
             </Link>
           ))}
+          </AnimatePresence>
         </div>
+
+        {/* 展开/收起按钮 */}
+        {hasMoreExperiments && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center mt-12"
+          >
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="group relative bg-white text-black px-8 py-4 font-bold text-lg uppercase tracking-wider border-4 border-white shadow-[6px_6px_0px_0px_rgba(255,0,255,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,255,255,1)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <span className="flex items-center gap-3">
+                {isExpanded ? "收起内容" : `查看全部实验 (${experiments.length})`}
+                <motion.span
+                  animate={{ rotate: isExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  ↓
+                </motion.span>
+              </span>
+            </button>
+          </motion.div>
+        )}
       </div>
 
       <Footer />

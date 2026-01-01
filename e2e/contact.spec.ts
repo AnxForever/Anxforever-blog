@@ -29,7 +29,6 @@ test.describe("Contact Form", () => {
     // Note: Since we use standard required attributes, browser validation triggers.
     // We can check if the input is invalid.
     const nameInput = page.locator('input[name="name"]')
-    const emailInput = page.locator('input[name="email"]')
 
     // In Playwright, we can check validity
     const isNameValid = await nameInput.evaluate((e: HTMLInputElement) => e.checkValidity())

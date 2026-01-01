@@ -4,7 +4,7 @@ import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
+import { ArrowLeft, ExternalLink, Github, Play } from "lucide-react"
 import { useParams, notFound } from "next/navigation"
 import { projects } from "@/lib/data"
 
@@ -60,6 +60,28 @@ export default function ProjectPage() {
               </p>
               <p>我们使用了 {project.tags.join(", ")} 等技术栈来实现这个项目，确保了最佳的性能和用户体验。</p>
             </div>
+
+            {/* Interactive Demo Section */}
+            {project.demoUrl && (
+              <div className="mt-12 border-4 border-black p-2 bg-black">
+                <div className="bg-white p-4">
+                  <h3 className="font-black text-2xl mb-4 flex items-center gap-2">
+                    <Play className="w-6 h-6" /> 交互体验 / INTERACTIVE DEMO
+                  </h3>
+                  <div className="aspect-[16/9] w-full border-2 border-black relative">
+                    <iframe
+                      src={project.demoUrl}
+                      className="w-full h-full"
+                      title={`${project.title} Demo`}
+                      loading="lazy"
+                    />
+                  </div>
+                  <p className="mt-2 text-sm text-gray-500 font-mono text-center">
+                    * 这是一个嵌入式预览，为了获得最佳体验，建议点击右侧链接访问完整网站。
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="space-y-8">
@@ -85,6 +107,34 @@ export default function ProjectPage() {
                 ))}
               </div>
             </div>
+
+            {(project.demoUrl || project.repoUrl) && (
+              <div className="border-t-4 border-black pt-4">
+                <h3 className="font-black text-xl mb-2">链接 / LINKS</h3>
+                <div className="flex flex-col gap-2">
+                  {project.demoUrl && (
+                    <a
+                      href={project.demoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 hover:text-accent-pink transition-colors font-mono font-bold"
+                    >
+                      <ExternalLink className="w-4 h-4" /> 访问网站 / LIVE DEMO
+                    </a>
+                  )}
+                  {project.repoUrl && (
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 hover:text-accent-pink transition-colors font-mono font-bold"
+                    >
+                      <Github className="w-4 h-4" /> 源代码 / SOURCE CODE
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

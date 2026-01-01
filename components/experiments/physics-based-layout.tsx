@@ -2,14 +2,15 @@
 
 import { useEffect, useRef, useState } from "react"
 import { RotateCcw } from "lucide-react"
+import type Matter from "matter-js"
 
 export function PhysicsBasedLayout() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [, setTick] = useState(0)
-  const engineRef = useRef<any>(null)
-  const renderRef = useRef<any>(null)
-  const runnerRef = useRef<any>(null)
-  const bodiesRef = useRef<any[]>([])
+  const engineRef = useRef<Matter.Engine | null>(null)
+  const renderRef = useRef<Matter.Render | null>(null)
+  const runnerRef = useRef<Matter.Runner | null>(null)
+  const bodiesRef = useRef<Matter.Body[]>([])
 
   useEffect(() => {
     const loadMatter = async () => {

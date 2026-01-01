@@ -9,6 +9,8 @@ import { experiments } from "@/lib/data"
 import { AudioReactiveParticles } from "@/components/experiments/audio-reactive-particles"
 import { GenerativeTypography } from "@/components/experiments/generative-typography"
 import { PhysicsBasedLayout } from "@/components/experiments/physics-based-layout"
+import { StyleTransfer } from "@/components/experiments/style-transfer"
+import { AITextDetector } from "@/components/experiments/ai-text-detector"
 
 export default function ExperimentPage() {
   const params = useParams()
@@ -38,6 +40,10 @@ export default function ExperimentPage() {
         return <GenerativeTypography />
       case "physics-based-layout":
         return <PhysicsBasedLayout />
+      case "style-transfer":
+        return <StyleTransfer />
+      case "ai-text-detector":
+        return <AITextDetector />
       default:
         return (
           <div className="absolute inset-0 flex items-center justify-center">

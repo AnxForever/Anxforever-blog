@@ -2,12 +2,19 @@
 
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
+import { useState } from "react"
 import { projects } from "@/lib/data"
 
+const INITIAL_DISPLAY_COUNT = 3
+
 export default function WorkPage() {
+  const [isExpanded, setIsExpanded] = useState(false)
+  const displayedProjects = isExpanded ? projects : projects.slice(0, INITIAL_DISPLAY_COUNT)
+  const hasMoreProjects = projects.length > INITIAL_DISPLAY_COUNT
+
   return (
     <main className="min-h-screen bg-white selection:bg-accent-pink selection:text-white">
       <Nav />
@@ -23,7 +30,8 @@ export default function WorkPage() {
         </motion.h1>
 
         <div className="grid grid-cols-1 gap-32">
-          {projects.map((project, index) => (
+          <AnimatePresence>
+          {displayedProjects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{ opacity: 0, y: 100 }}
@@ -39,6 +47,7 @@ export default function WorkPage() {
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
                     className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-300" />
@@ -51,7 +60,7 @@ export default function WorkPage() {
                   <span className="text-gray-500">{project.client}</span>
                 </div>
 
-                <h2 className="text-5xl md:text-7xl font-black uppercase leading-[0.9]">{project.title}</h2>
+                <h2 className="text-5xl md:text-7xl font-black leading-[0.9]">{project.title}</h2>
 
                 <p className="text-xl font-mono leading-relaxed max-w-md">{project.description}</p>
 
@@ -68,14 +77,39 @@ export default function WorkPage() {
 
                 <Link href={`/work/${project.slug}`}>
                   <button className="w-fit mt-8 flex items-center gap-2 text-lg font-bold group/btn">
-                    VIEW CASE STUDY
-                    <span className="group-hover/btn:translate-x-2 transition-transform duration-300">-&gt;</span>
+                    查看案例
+                    <span className="group-hover/btn:translate-x-2 transition-transform duration-300">→</span>
                   </button>
                 </Link>
               </div>
             </motion.div>
           ))}
+          </AnimatePresence>
         </div>
+
+        {/* 展开/收起按钮 */}
+        {hasMoreProjects && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex justify-center mt-20"
+          >
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="group relative bg-black text-white px-8 py-4 font-bold text-lg uppercase tracking-wider border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,255,255,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,255,0,1)] hover:-translate-y-1 transition-all duration-300"
+            >
+              <span className="flex items-center gap-3">
+                {isExpanded ? "收起内容" : `查看全部作品 (${projects.length})`}
+                <motion.span
+                  animate={{ rotate: isExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  ↓
+                </motion.span>
+              </span>
+            </button>
+          </motion.div>
+        )}
       </div>
 
       <Footer />

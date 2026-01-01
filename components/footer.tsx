@@ -12,7 +12,7 @@ export function Footer() {
             <span className="font-mono font-bold">READY TO START?</span>
           </div>
           <h2 className="text-[12vw] leading-[0.8] font-black tracking-tighter text-black drop-shadow-[4px_4px_0px_rgba(0,0,0,0.2)]">
-            LET'S
+            LET&apos;S
           </h2>
           <h2 className="text-[12vw] leading-[0.8] font-black tracking-tighter text-white text-stroke drop-shadow-[4px_4px_0px_rgba(0,0,0,1)]">
             TALK
