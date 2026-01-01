@@ -57,7 +57,6 @@
     "framer-motion": "latest",
     "input-otp": "1.4.1",
     "jest": "latest",
-    "lightningcss-win32-x64-msvc": "^1.30.2",
     "lucide-react": "^0.454.0",
     "matter-js": "latest",
     "next": "^16.1.1",
